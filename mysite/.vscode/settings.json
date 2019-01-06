@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/*.pyc": true,
+        "**/__pycache__": true
+    },
+    "python.pythonPath": "/home/pablo/.local/share/virtualenvs/django-tutorial-Ru_o8rsR/bin/python3"
+}
