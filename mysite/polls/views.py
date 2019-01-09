@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
+from polls.forms import NameForm
 from polls.models import Question, Choice
 
 
@@ -38,3 +39,16 @@ def vote(request, question_id):
         selected_choice.votes += 1
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
+
+
+def get_name(request):
+    if request.method == "POST":
+        form = NameForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect(reverse('polls:thanks'))
+    else:
+        form = NameForm()
+        return render(request, 'polls/name.html', {'form': form})
+
+def thanks(request):
+    return HttpResponse("Thanks!")
