@@ -3,8 +3,9 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
+from django.core.mail import send_mail
 
-from polls.forms import NameForm
+from polls.forms import NameForm, ContactForm
 from polls.models import Question, Choice
 
 
@@ -40,7 +41,6 @@ def vote(request, question_id):
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
 
-
 def get_name(request):
     if request.method == "POST":
         form = NameForm(request.POST)
@@ -52,3 +52,23 @@ def get_name(request):
 
 def thanks(request):
     return HttpResponse("Thanks!")
+
+
+def contact_form(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            sender = form.cleaned_data['sender']
+            cc_myself = form.cleaned_data['cc_myself']
+
+            recipients = ['pmuguer@gmail.com']
+            if cc_myself:
+                recipients.append(sender)
+
+            #send_mail(subject, message, sender, recipients)
+            return HttpResponseRedirect(reverse('polls:thanks'))
+    else:
+        form = ContactForm()
+        return render(request, 'polls/contact_form.html', {'form': form})
