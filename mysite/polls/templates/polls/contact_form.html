@@ -1,5 +1,25 @@
 <form action="{% url 'polls:contact-form' %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.non_field_errors }}
+    <div class="fieldWrapper">
+        {{ form.subject.errors }}
+        <label for="{{ form.subject.id_for_label }}">Email subject:</label>
+        {{ form.subject }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.message.errors }}
+        <label for="{{ form.message.id_for_label }}">Message:</label>
+        {{ form.message }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.sender.errors }}
+        <label for="{{ form.message.label_for_id }}">Sender:</label>
+        {{ form.sender }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.cc_myself.errors }}
+        <label for="{{ form.cc_myself.label_for_id }}">CC myself:</label>
+        {{ form.cc_myself }}
+    </div>
     <input type="submit" value="Enviar">
 </form>

@@ -56,6 +56,7 @@ def thanks(request):
 
 def contact_form(request):
     if request.method == "POST":
+        # create a form instance and populate it with data from the request:
         form = ContactForm(request.POST)
         if form.is_valid():
             subject = form.cleaned_data['subject']
@@ -69,6 +70,8 @@ def contact_form(request):
 
             #send_mail(subject, message, sender, recipients)
             return HttpResponseRedirect(reverse('polls:thanks'))
+        else:
+            return HttpResponse("Error")
     else:
         form = ContactForm()
         return render(request, 'polls/contact_form.html', {'form': form})
