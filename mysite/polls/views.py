@@ -70,8 +70,7 @@ def contact_form(request):
 
             #send_mail(subject, message, sender, recipients)
             return HttpResponseRedirect(reverse('polls:thanks'))
-        else:
-            return HttpResponse("Error")
+        return render(request, 'polls/contact_form.html', {'form': form})
     else:
         form = ContactForm()
         return render(request, 'polls/contact_form.html', {'form': form})
